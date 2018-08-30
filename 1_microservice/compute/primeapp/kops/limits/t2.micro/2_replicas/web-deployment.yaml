@@ -1,0 +1,48 @@
+# ------------------- primeapp ------------------- #
+---
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: primeapp-deployment
+  namespace: default
+spec:
+  replicas: 2 # tells deployment to run 1 pods matching the template
+  template: # template definition for a pod
+    metadata:
+      # the name is not included in the meta data as a unique name is
+      # generated from the deployment name
+      labels:
+        app: primeapp
+    spec:
+      containers:
+      - name: primeapp
+        image: ansjin/primeapp
+        imagePullPolicy: Always
+        ports:
+        - name: primeapp
+          containerPort: 80
+          protocol: TCP
+        resources:
+          limits:
+            cpu: 1000m
+            memory: 1000Mi
+          requests:
+            cpu: 1000m
+            memory: 1000Mi
+# ------------------- primeapp Service ------------------- #
+---
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+    app: primeapp
+  name: primeapp
+  namespace: default
+spec:
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 80
+  type: LoadBalancer
+  selector:
+    app: primeapp

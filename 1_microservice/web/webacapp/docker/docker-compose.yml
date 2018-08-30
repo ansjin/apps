@@ -1,0 +1,8 @@
+version: "2"
+services:
+  webacapp:
+    build: ../src
+    ports:
+      - "80:80"
+    restart: always
+    image: ansjin/webacapp

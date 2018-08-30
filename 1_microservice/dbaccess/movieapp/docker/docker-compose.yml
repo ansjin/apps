@@ -1,0 +1,14 @@
+version: "2"
+services:
+  movieapp:
+    build: ../src
+    ports:
+      - "80:80"
+    restart: always
+    image: ansjin/movieapp:movie
+    links:
+      - mongo
+  mongo:
+    image: ansjin/movieapp:mongo
+    ports:
+      - "27017:27017"

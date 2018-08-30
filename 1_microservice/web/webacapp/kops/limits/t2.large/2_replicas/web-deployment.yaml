@@ -1,0 +1,48 @@
+# ------------------- webacapp ------------------- #
+---
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: webacapp-deployment
+  namespace: default
+spec:
+  replicas: 2 # tells deployment to run 1 pods matching the template
+  template: # template definition for a pod
+    metadata:
+      # the name is not included in the meta data as a unique name is
+      # generated from the deployment name
+      labels:
+        app: webacapp
+    spec:
+      containers:
+      - name: webacapp
+        image: ansjin/webacapp
+        imagePullPolicy: Always
+        ports:
+        - name: webacapp
+          containerPort: 80
+          protocol: TCP
+        resources:
+          limits:
+            cpu: 2000m
+            memory: 8000Mi
+          requests:
+            cpu: 2000m
+            memory: 8000Mi
+# ------------------- webacapp Service ------------------- #
+---
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+    app: webacapp
+  name: webacapp
+  namespace: default
+spec:
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 80
+  type: LoadBalancer
+  selector:
+    app: webacapp

@@ -1,0 +1,92 @@
+# ------------------- mongo RC ------------------- #
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  labels:
+    name: mongo
+  name: mongo-controller
+  namespace: default
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: mongo
+    spec:
+      containers:
+      - image: ansjin/movieapp:mongo
+        name: mongo
+        ports:
+        - name: mongo
+          containerPort: 27017
+          hostPort: 27017
+        volumeMounts:
+            - name: mongo-persistent-storage
+              mountPath: /data/db
+      volumes:
+        - name: mongo-persistent-storage
+          hostPath:
+              path: /data/db
+# ------------------- mongo Service ------------------- #
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    name: mongo
+  name: mongo
+  namespace: default
+spec:
+  ports:
+    - port: 27017
+      targetPort: 27017
+  selector:
+    name: mongo
+# ------------------- movieapp ------------------- #
+---
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: movieapp-deployment
+  namespace: default
+spec:
+  replicas: 1 # tells deployment to run 1 pods matching the template
+  template: # template definition for a pod
+    metadata:
+      # the name is not included in the meta data as a unique name is
+      # generated from the deployment name
+      labels:
+        app: movieapp
+    spec:
+      containers:
+      - name: movieapp
+        image: ansjin/movieapp:movie
+        imagePullPolicy: Always
+        ports:
+        - name: movieapp
+          containerPort: 80
+          protocol: TCP
+        resources:
+          limits:
+            cpu: 2000m
+            memory: 8000Mi
+          requests:
+            cpu: 2000m
+            memory: 8000Mi
+# ------------------- movieapp Service ------------------- #
+---
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+    app: movieapp
+  name: movieapp
+  namespace: default
+spec:
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 80
+  type: LoadBalancer
+  selector:
+    app: movieapp
