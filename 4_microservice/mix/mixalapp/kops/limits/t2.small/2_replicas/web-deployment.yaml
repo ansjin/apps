@@ -6,7 +6,7 @@ metadata:
   name: primeapp-deployment
   namespace: default
 spec:
-  replicas: 10 # tells deployment to run 10 pods matching the template
+  replicas: 2 # tells deployment to run 2 pods matching the template
   template: # template definition for a pod
     metadata:
       # the name is not included in the meta data as a unique name is
@@ -22,6 +22,13 @@ spec:
         - name: primeapp
           containerPort: 9001
           protocol: TCP
+        resources:
+          limits:
+            cpu: 1000m
+            memory: 2000Mi
+          requests:
+            cpu: 1000m
+            memory: 2000Mi
 # ------------------- primeapp Service ------------------- #
 ---
 kind: Service
@@ -47,7 +54,7 @@ metadata:
   name: movieapp-deployment
   namespace: default
 spec:
-  replicas: 10 # tells deployment to run 10 pods matching the template
+  replicas: 2 # tells deployment to run 2 pods matching the template
   template: # template definition for a pod
     metadata:
       # the name is not included in the meta data as a unique name is
@@ -63,6 +70,13 @@ spec:
         - name: movieapp
           containerPort: 9002
           protocol: TCP
+        resources:
+          limits:
+            cpu: 1000m
+            memory: 2000Mi
+          requests:
+            cpu: 1000m
+            memory: 2000Mi
 # ------------------- movieapp Service ------------------- #
 ---
 kind: Service
@@ -88,7 +102,7 @@ metadata:
   name: webacapp-deployment
   namespace: default
 spec:
-  replicas: 10 # tells deployment to run 10 pods matching the template
+  replicas: 2 # tells deployment to run 2 pods matching the template
   template: # template definition for a pod
     metadata:
       # the name is not included in the meta data as a unique name is
@@ -104,6 +118,13 @@ spec:
         - name: webacapp
           containerPort: 9003
           protocol: TCP
+        resources:
+          limits:
+            cpu: 1000m
+            memory: 2000Mi
+          requests:
+            cpu: 1000m
+            memory: 2000Mi
 # ------------------- webacapp Service ------------------- #
 ---
 kind: Service
@@ -173,7 +194,7 @@ metadata:
   name: serveapp-deployment
   namespace: default
 spec:
-  replicas: 10 # tells deployment to run 10 pods matching the template
+  replicas: 2 # tells deployment to run 2 pods matching the template
   template: # template definition for a pod
     metadata:
       # the name is not included in the meta data as a unique name is
@@ -189,6 +210,13 @@ spec:
         - name: serveapp
           containerPort: 8080
           protocol: TCP
+        resources:
+          limits:
+            cpu: 1000m
+            memory: 2000Mi
+          requests:
+            cpu: 1000m
+            memory: 2000Mi
 # ------------------- serveapp Service ------------------- #
 ---
 kind: Service

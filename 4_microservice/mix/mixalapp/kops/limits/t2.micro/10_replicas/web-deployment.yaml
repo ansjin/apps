@@ -22,6 +22,13 @@ spec:
         - name: primeapp
           containerPort: 9001
           protocol: TCP
+        resources:
+          limits:
+            cpu: 1000m
+            memory: 1000Mi
+          requests:
+            cpu: 1000m
+            memory: 1000Mi
 # ------------------- primeapp Service ------------------- #
 ---
 kind: Service
@@ -63,6 +70,13 @@ spec:
         - name: movieapp
           containerPort: 9002
           protocol: TCP
+        resources:
+          limits:
+            cpu: 1000m
+            memory: 1000Mi
+          requests:
+            cpu: 1000m
+            memory: 1000Mi
 # ------------------- movieapp Service ------------------- #
 ---
 kind: Service
@@ -104,6 +118,13 @@ spec:
         - name: webacapp
           containerPort: 9003
           protocol: TCP
+        resources:
+          limits:
+            cpu: 1000m
+            memory: 1000Mi
+          requests:
+            cpu: 1000m
+            memory: 1000Mi
 # ------------------- webacapp Service ------------------- #
 ---
 kind: Service
@@ -189,6 +210,13 @@ spec:
         - name: serveapp
           containerPort: 8080
           protocol: TCP
+        resources:
+          limits:
+            cpu: 1000m
+            memory: 1000Mi
+          requests:
+            cpu: 1000m
+            memory: 1000Mi
 # ------------------- serveapp Service ------------------- #
 ---
 kind: Service
