@@ -1,0 +1,336 @@
+# ------------------- primeapp ------------------- #
+---
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: primeapp-deployment
+  namespace: default
+spec:
+  replicas: 1 # tells deployment to run 1 pods matching the template
+  template: # template definition for a pod
+    metadata:
+      # the name is not included in the meta data as a unique name is
+      # generated from the deployment name
+      labels:
+        app: primeapp
+    spec:
+      containers:
+      - name: primeapp
+        image: terminusimages/dummy_response_app:latest
+        imagePullPolicy: Always
+        ports:
+        - name: primeapp
+          containerPort: 9001
+          protocol: TCP
+        env:
+        - name: TEST_API
+          value: "/api/test"
+        - name: DUMMY_RESPONSE
+          value: "{\"result\":249995787104.9515}"
+        - name: PORT
+          value: "9001"
+# ------------------- primeapp Service ------------------- #
+---
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+    app: primeapp
+  name: primeapp
+  namespace: default
+spec:
+  ports:
+    - port: 9001
+      protocol: TCP
+      targetPort: 9001
+  selector:
+    app: primeapp
+
+# ------------------- movieapp ------------------- #
+---
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: movieapp-deployment
+  namespace: default
+spec:
+  replicas: 1 # tells deployment to run 1 pods matching the template
+  template: # template definition for a pod
+    metadata:
+      # the name is not included in the meta data as a unique name is
+      # generated from the deployment name
+      labels:
+        app: movieapp
+    spec:
+      containers:
+      - name: movieapp
+        image: terminusimages/dummy_response_app:latest
+        imagePullPolicy: Always
+        ports:
+        - name: movieapp
+          containerPort: 9002
+          protocol: TCP
+        env:
+        - name: TEST_API
+          value: "/api/movies"
+        - name: DUMMY_RESPONSE
+          value: "[{\"director\":\"Sashenka Graysmark\",\"genre\":\"Musical\",\"id\":\"5b6e32eb8f24151c69c5e4ea\",\"rated\":\"G\",\"runtime\":\"111
+                        min\",\"title\":\"Rank\",\"year\":\"1947-12-02\"},{\"director\":\"Violette Noddle\",\"genre\":\"Mystery\",\"id\":\"5b6e32eb8f24151c69c5e4eb\",\"rated\":\"G\",\"runtime\":\"144
+                        min\",\"title\":\"Tresom\",\"year\":\"1913-05-31\"},{\"director\":\"Miranda Jandl\",\"genre\":\"Musical\",\"id\":\"5b6e32eb8f24151c69c5e4ec\",\"rated\":\"K\",\"runtime\":\"123
+                        min\",\"title\":\"Biodex\",\"year\":\"1926-06-05\"},{\"director\":\"Ingamar St. Clair\",\"genre\":\"Musical\",\"id\":\"5b6e32eb8f24151c69c5e4ed\",\"rated\":\"A\",\"runtime\":\"142
+                        min\",\"title\":\"Cardify\",\"year\":\"1927-06-15\"},{\"director\":\"Melinda Roggers\",\"genre\":\"Family\",\"id\":\"5b6e32eb8f24151c69c5e4ee\",\"rated\":\"B\",\"runtime\":\"86
+                        min\",\"title\":\"Y-find\",\"year\":\"2006-08-14\"},{\"director\":\"Wait Kitcher\",\"genre\":\"Mystery\",\"id\":\"5b6e32eb8f24151c69c5e4ef\",\"rated\":\"G\",\"runtime\":\"110
+                        min\",\"title\":\"Stringtough\",\"year\":\"1978-02-08\"},{\"director\":\"Joseph Belsher\",\"genre\":\"History\",\"id\":\"5b6e32eb8f24151c69c5e4f0\",\"rated\":\"K\",\"runtime\":\"154
+                        min\",\"title\":\"Zathin\",\"year\":\"1989-03-05\"},{\"director\":\"Leena Goodsal\",\"genre\":\"Mystery\",\"id\":\"5b6e32eb8f24151c69c5e4f1\",\"rated\":\"A\",\"runtime\":\"105
+                        min\",\"title\":\"Voltsillam\",\"year\":\"1941-03-02\"},{\"director\":\"Boniface Ledrane\",\"genre\":\"Adventure\",\"id\":\"5b6e32eb8f24151c69c5e4f2\",\"rated\":\"A\",\"runtime\":\"84
+                        min\",\"title\":\"Cookley\",\"year\":\"1949-11-26\"},{\"director\":\"Manuel Jansey\",\"genre\":\"Documentary\",\"id\":\"5b6e32eb8f24151c69c5e4f3\",\"rated\":\"B\",\"runtime\":\"151
+                        min\",\"title\":\"Overhold\",\"year\":\"1966-08-01\"},{\"director\":\"Beniamino Bayns\",\"genre\":\"Action\",\"id\":\"5b6e32eb8f24151c69c5e4f4\",\"rated\":\"B\",\"runtime\":\"138
+                        min\",\"title\":\"Job\",\"year\":\"1911-01-26\"},{\"director\":\"Vito D'eye\",\"genre\":\"Animation\",\"id\":\"5b6e32eb8f24151c69c5e4f5\",\"rated\":\"G\",\"runtime\":\"148
+                        min\",\"title\":\"Greenlam\",\"year\":\"1976-09-15\"},{\"director\":\"Ulrica Peffer\",\"genre\":\"Documentary\",\"id\":\"5b6e32eb8f24151c69c5e4f6\",\"rated\":\"B\",\"runtime\":\"143
+                        min\",\"title\":\"Tres-Zap\",\"year\":\"1992-11-01\"},{\"director\":\"Mallory Leneve\",\"genre\":\"Western\",\"id\":\"5b6e32eb8f24151c69c5e4f7\",\"rated\":\"B\",\"runtime\":\"78
+                        min\",\"title\":\"Opela\",\"year\":\"1988-10-05\"},{\"director\":\"Weidar Holdforth\",\"genre\":\"Music\",\"id\":\"5b6e32eb8f24151c69c5e4f8\",\"rated\":\"R\",\"runtime\":\"105
+                        min\",\"title\":\"Temp\",\"year\":\"1907-08-04\"},{\"director\":\"Vinnie Reisenstein\",\"genre\":\"Fantasy\",\"id\":\"5b6e32eb8f24151c69c5e4f9\",\"rated\":\"G\",\"runtime\":\"140
+                        min\",\"title\":\"Flexidy\",\"year\":\"1982-05-25\"},{\"director\":\"Bren Obeney\",\"genre\":\"Biography\",\"id\":\"5b6e32eb8f24151c69c5e4fa\",\"rated\":\"S\",\"runtime\":\"120
+                        min\",\"title\":\"Fix San\",\"year\":\"1902-01-30\"},{\"director\":\"Pepita Knee\",\"genre\":\"Drama\",\"id\":\"5b6e32eb8f24151c69c5e4fb\",\"rated\":\"S\",\"runtime\":\"108
+                        min\",\"title\":\"Veribet\",\"year\":\"1989-05-02\"},{\"director\":\"Aili Onslow\",\"genre\":\"Horror\",\"id\":\"5b6e32eb8f24151c69c5e4fc\",\"rated\":\"A\",\"runtime\":\"114
+                        min\",\"title\":\"Alpha\",\"year\":\"1933-04-22\"},{\"director\":\"Marta Beddow\",\"genre\":\"Animation\",\"id\":\"5b6e32eb8f24151c69c5e4fd\",\"rated\":\"R\",\"runtime\":\"94
+                        min\",\"title\":\"Regrant\",\"year\":\"1930-04-27\"},{\"director\":\"Skyler Langhor\",\"genre\":\"Action\",\"id\":\"5b6e32eb8f24151c69c5e4fe\",\"rated\":\"S\",\"runtime\":\"115
+                        min\",\"title\":\"Fintone\",\"year\":\"1952-02-11\"},{\"director\":\"Cleon Langlais\",\"genre\":\"Animation\",\"id\":\"5b6e32eb8f24151c69c5e4ff\",\"rated\":\"B\",\"runtime\":\"85
+                        min\",\"title\":\"Sonsing\",\"year\":\"1910-10-11\"},{\"director\":\"Sax Cassimer\",\"genre\":\"Fantasy\",\"id\":\"5b6e32eb8f24151c69c5e500\",\"rated\":\"S\",\"runtime\":\"110
+                        min\",\"title\":\"Bigtax\",\"year\":\"1936-09-12\"},{\"director\":\"Gaven M'Chirrie\",\"genre\":\"Biography\",\"id\":\"5b6e32eb8f24151c69c5e501\",\"rated\":\"S\",\"runtime\":\"142
+                        min\",\"title\":\"Stim\",\"year\":\"1976-08-28\"},{\"director\":\"Karlan Loyley\",\"genre\":\"Music\",\"id\":\"5b6e32eb8f24151c69c5e502\",\"rated\":\"B\",\"runtime\":\"156
+                        min\",\"title\":\"Vagram\",\"year\":\"1988-02-24\"},{\"director\":\"Whitney Snelson\",\"genre\":\"Sci-Fi\",\"id\":\"5b6e32eb8f24151c69c5e503\",\"rated\":\"A\",\"runtime\":\"102
+                        min\",\"title\":\"It\",\"year\":\"1968-08-09\"},{\"director\":\"Ted Shiers\",\"genre\":\"Fantasy\",\"id\":\"5b6e32eb8f24151c69c5e504\",\"rated\":\"G\",\"runtime\":\"138
+                        min\",\"title\":\"Viva\",\"year\":\"1981-02-24\"},{\"director\":\"Izabel Doyley\",\"genre\":\"Comedy\",\"id\":\"5b6e32eb8f24151c69c5e505\",\"rated\":\"S\",\"runtime\":\"105
+                        min\",\"title\":\"Stringtough\",\"year\":\"1916-01-04\"},{\"director\":\"Erminia Rankcom\",\"genre\":\"Animation\",\"id\":\"5b6e32eb8f24151c69c5e506\",\"rated\":\"G\",\"runtime\":\"143
+                        min\",\"title\":\"Flowdesk\",\"year\":\"1975-08-31\"},{\"director\":\"Kathi Kington\",\"genre\":\"Animation\",\"id\":\"5b6e32eb8f24151c69c5e507\",\"rated\":\"B\",\"runtime\":\"110
+                        min\",\"title\":\"Toughjoyfax\",\"year\":\"1943-08-08\"},{\"director\":\"Kamillah Wilbor\",\"genre\":\"Family\",\"id\":\"5b6e32eb8f24151c69c5e508\",\"rated\":\"A\",\"runtime\":\"144
+                        min\",\"title\":\"Solarbreeze\",\"year\":\"1932-01-05\"},{\"director\":\"Antone Coveley\",\"genre\":\"Horror\",\"id\":\"5b6e32eb8f24151c69c5e509\",\"rated\":\"G\",\"runtime\":\"92
+                        min\",\"title\":\"Aerified\",\"year\":\"1967-04-15\"},{\"director\":\"Osbourn Plak\",\"genre\":\"Musical\",\"id\":\"5b6e32eb8f24151c69c5e50a\",\"rated\":\"K\",\"runtime\":\"161
+                        min\",\"title\":\"Cookley\",\"year\":\"1970-03-28\"},{\"director\":\"Perry Trevor\",\"genre\":\"Drama\",\"id\":\"5b6e32eb8f24151c69c5e50b\",\"rated\":\"G\",\"runtime\":\"133
+                        min\",\"title\":\"Wrapsafe\",\"year\":\"1969-02-05\"},{\"director\":\"Dale Casterton\",\"genre\":\"Music\",\"id\":\"5b6e32eb8f24151c69c5e50c\",\"rated\":\"G\",\"runtime\":\"77
+                        min\",\"title\":\"Domainer\",\"year\":\"1956-09-25\"},{\"director\":\"Moina Cursons\",\"genre\":\"Sci-Fi\",\"id\":\"5b6e32eb8f24151c69c5e50d\",\"rated\":\"B\",\"runtime\":\"164
+                        min\",\"title\":\"Zathin\",\"year\":\"1917-09-14\"},{\"director\":\"Packston Wattins\",\"genre\":\"Adventure\",\"id\":\"5b6e32eb8f24151c69c5e50e\",\"rated\":\"R\",\"runtime\":\"88
+                        min\",\"title\":\"Home Ing\",\"year\":\"1989-03-17\"},{\"director\":\"Kim Chalice\",\"genre\":\"History\",\"id\":\"5b6e32eb8f24151c69c5e50f\",\"rated\":\"G\",\"runtime\":\"166
+                        min\",\"title\":\"Cardify\",\"year\":\"1908-02-11\"},{\"director\":\"Rodrique Hegges\",\"genre\":\"Film-Noir\",\"id\":\"5b6e32eb8f24151c69c5e510\",\"rated\":\"S\",\"runtime\":\"155
+                        min\",\"title\":\"Wrapsafe\",\"year\":\"1946-11-18\"},{\"director\":\"Claybourne Monaghan\",\"genre\":\"Animation\",\"id\":\"5b6e32eb8f24151c69c5e511\",\"rated\":\"S\",\"runtime\":\"111
+                        min\",\"title\":\"Andalax\",\"year\":\"1942-08-06\"},{\"director\":\"Meyer Romanini\",\"genre\":\"Music\",\"id\":\"5b6e32eb8f24151c69c5e512\",\"rated\":\"G\",\"runtime\":\"127
+                        min\",\"title\":\"Tampflex\",\"year\":\"1950-03-14\"},{\"director\":\"Charlotta Hammer\",\"genre\":\"Action\",\"id\":\"5b6e32eb8f24151c69c5e513\",\"rated\":\"R\",\"runtime\":\"87
+                        min\",\"title\":\"Zamit\",\"year\":\"1989-04-24\"},{\"director\":\"Eloisa Walter\",\"genre\":\"Drama\",\"id\":\"5b6e32eb8f24151c69c5e514\",\"rated\":\"G\",\"runtime\":\"100
+                        min\",\"title\":\"Voyatouch\",\"year\":\"1968-09-22\"},{\"director\":\"Valentina Hebbes\",\"genre\":\"Action\",\"id\":\"5b6e32eb8f24151c69c5e515\",\"rated\":\"R\",\"runtime\":\"109
+                        min\",\"title\":\"Toughjoyfax\",\"year\":\"1949-06-26\"},{\"director\":\"Aubine Pask\",\"genre\":\"Horror\",\"id\":\"5b6e32eb8f24151c69c5e516\",\"rated\":\"R\",\"runtime\":\"108
+                        min\",\"title\":\"Tempsoft\",\"year\":\"1961-11-21\"},{\"director\":\"Bernie Swadon\",\"genre\":\"Crime\",\"id\":\"5b6e32eb8f24151c69c5e517\",\"rated\":\"G\",\"runtime\":\"165
+                        min\",\"title\":\"Cookley\",\"year\":\"1920-09-06\"},{\"director\":\"Corney Fidge\",\"genre\":\"Mystery\",\"id\":\"5b6e32eb8f24151c69c5e518\",\"rated\":\"R\",\"runtime\":\"149
+                        min\",\"title\":\"Sub-Ex\",\"year\":\"1907-10-06\"},{\"director\":\"Geri Wilcockes\",\"genre\":\"Animation\",\"id\":\"5b6e32eb8f24151c69c5e519\",\"rated\":\"R\",\"runtime\":\"143
+                        min\",\"title\":\"Temp\",\"year\":\"1985-07-13\"},{\"director\":\"Maxim Belle\",\"genre\":\"Film-Noir\",\"id\":\"5b6e32eb8f24151c69c5e51a\",\"rated\":\"K\",\"runtime\":\"131
+                        min\",\"title\":\"Zaam-Dox\",\"year\":\"1969-03-09\"},{\"director\":\"Florette Pentony\",\"genre\":\"Action\",\"id\":\"5b6e32eb8f24151c69c5e51b\",\"rated\":\"A\",\"runtime\":\"104
+                        min\",\"title\":\"Aerified\",\"year\":\"1908-04-13\"},{\"director\":\"Dee Ohlsen\",\"genre\":\"History\",\"id\":\"5b6e32eb8f24151c69c5e51c\",\"rated\":\"A\",\"runtime\":\"149
+                        min\",\"title\":\"Span\",\"year\":\"1992-01-22\"},{\"director\":\"Connie Arendsen\",\"genre\":\"Action\",\"id\":\"5b6e32eb8f24151c69c5e51d\",\"rated\":\"A\",\"runtime\":\"166
+                        min\",\"title\":\"Rank\",\"year\":\"1903-05-29\"},{\"director\":\"Claudianus Finnick\",\"genre\":\"Film-Noir\",\"id\":\"5b6e32eb8f24151c69c5e51e\",\"rated\":\"B\",\"runtime\":\"138
+                        min\",\"title\":\"Regrant\",\"year\":\"1930-06-20\"},{\"director\":\"Brooke Spinke\",\"genre\":\"Documentary\",\"id\":\"5b6e32eb8f24151c69c5e51f\",\"rated\":\"R\",\"runtime\":\"166
+                        min\",\"title\":\"Ventosanzap\",\"year\":\"2001-09-07\"},{\"director\":\"Bernadene Cheater\",\"genre\":\"Horror\",\"id\":\"5b6e32eb8f24151c69c5e520\",\"rated\":\"K\",\"runtime\":\"128
+                        min\",\"title\":\"Stringtough\",\"year\":\"1937-04-06\"},{\"director\":\"Elsbeth Stretton\",\"genre\":\"Musical\",\"id\":\"5b6e32eb8f24151c69c5e521\",\"rated\":\"S\",\"runtime\":\"114
+                        min\",\"title\":\"Rank\",\"year\":\"1952-03-09\"},{\"director\":\"Neville Gibben\",\"genre\":\"Action\",\"id\":\"5b6e32eb8f24151c69c5e522\",\"rated\":\"G\",\"runtime\":\"165
+                        min\",\"title\":\"Konklux\",\"year\":\"1934-10-04\"},{\"director\":\"Fairlie Garard\",\"genre\":\"Biography\",\"id\":\"5b6e32eb8f24151c69c5e523\",\"rated\":\"K\",\"runtime\":\"80
+                        min\",\"title\":\"Alpha\",\"year\":\"1917-06-30\"},{\"director\":\"Chrysler Conway\",\"genre\":\"War\",\"id\":\"5b6e32eb8f24151c69c5e524\",\"rated\":\"R\",\"runtime\":\"117
+                        min\",\"title\":\"Job\",\"year\":\"1975-11-13\"},{\"director\":\"Lynea Rentz\",\"genre\":\"Romance\",\"id\":\"5b6e32eb8f24151c69c5e525\",\"rated\":\"A\",\"runtime\":\"152
+                        min\",\"title\":\"Veribet\",\"year\":\"2010-06-13\"},{\"director\":\"Blondelle Hawtin\",\"genre\":\"Mystery\",\"id\":\"5b6e32eb8f24151c69c5e526\",\"rated\":\"A\",\"runtime\":\"146
+                        min\",\"title\":\"Hatity\",\"year\":\"1957-08-11\"},{\"director\":\"Rolland Leftwich\",\"genre\":\"Film-Noir\",\"id\":\"5b6e32eb8f24151c69c5e527\",\"rated\":\"R\",\"runtime\":\"139
+                        min\",\"title\":\"Tempsoft\",\"year\":\"1981-04-05\"},{\"director\":\"Robbie Johananov\",\"genre\":\"Sci-Fi\",\"id\":\"5b6e32eb8f24151c69c5e528\",\"rated\":\"K\",\"runtime\":\"127
+                        min\",\"title\":\"Namfix\",\"year\":\"1960-12-22\"},{\"director\":\"Kariotta Falcus\",\"genre\":\"Drama\",\"id\":\"5b6e32eb8f24151c69c5e529\",\"rated\":\"B\",\"runtime\":\"144
+                        min\",\"title\":\"Greenlam\",\"year\":\"1947-03-02\"},{\"director\":\"Finlay Harnes\",\"genre\":\"War\",\"id\":\"5b6e32eb8f24151c69c5e52a\",\"rated\":\"B\",\"runtime\":\"114
+                        min\",\"title\":\"Voltsillam\",\"year\":\"2000-09-14\"},{\"director\":\"Davis Earngy\",\"genre\":\"Sci-Fi\",\"id\":\"5b6e32eb8f24151c69c5e52b\",\"rated\":\"S\",\"runtime\":\"87
+                        min\",\"title\":\"Bitchip\",\"year\":\"2012-06-13\"},{\"director\":\"Hakeem Elia\",\"genre\":\"Film-Noir\",\"id\":\"5b6e32eb8f24151c69c5e52c\",\"rated\":\"B\",\"runtime\":\"167
+                        min\",\"title\":\"Toughjoyfax\",\"year\":\"1937-08-10\"},{\"director\":\"Troy Branney\",\"genre\":\"Animation\",\"id\":\"5b6e32eb8f24151c69c5e52d\",\"rated\":\"B\",\"runtime\":\"136
+                        min\",\"title\":\"Span\",\"year\":\"1971-09-18\"},{\"director\":\"Englebert Ashington\",\"genre\":\"Horror\",\"id\":\"5b6e32eb8f24151c69c5e52e\",\"rated\":\"A\",\"runtime\":\"117
+                        min\",\"title\":\"Y-find\",\"year\":\"2002-10-21\"},{\"director\":\"Robyn Atter\",\"genre\":\"Adventure\",\"id\":\"5b6e32eb8f24151c69c5e52f\",\"rated\":\"K\",\"runtime\":\"137
+                        min\",\"title\":\"Stronghold\",\"year\":\"2003-01-17\"},{\"director\":\"Mohandis Tegeller\",\"genre\":\"Sport\",\"id\":\"5b6e32eb8f24151c69c5e530\",\"rated\":\"K\",\"runtime\":\"156
+                        min\",\"title\":\"Quo Lux\",\"year\":\"1957-05-17\"},{\"director\":\"Kathi Anmore\",\"genre\":\"Documentary\",\"id\":\"5b6e32eb8f24151c69c5e531\",\"rated\":\"K\",\"runtime\":\"122
+                        min\",\"title\":\"Cardguard\",\"year\":\"2007-11-23\"},{\"director\":\"Kat End\",\"genre\":\"Western\",\"id\":\"5b6e32eb8f24151c69c5e532\",\"rated\":\"K\",\"runtime\":\"164
+                        min\",\"title\":\"Andalax\",\"year\":\"2005-05-17\"},{\"director\":\"Elmo Pagitt\",\"genre\":\"Comedy\",\"id\":\"5b6e32eb8f24151c69c5e533\",\"rated\":\"S\",\"runtime\":\"166
+                        min\",\"title\":\"Solarbreeze\",\"year\":\"2010-10-20\"},{\"director\":\"Karla Biaggioni\",\"genre\":\"Music\",\"id\":\"5b6e32eb8f24151c69c5e534\",\"rated\":\"A\",\"runtime\":\"110
+                        min\",\"title\":\"Temp\",\"year\":\"1995-06-07\"},{\"director\":\"Everett O'Neal\",\"genre\":\"Crime\",\"id\":\"5b6e32eb8f24151c69c5e535\",\"rated\":\"A\",\"runtime\":\"145
+                        min\",\"title\":\"Tres-Zap\",\"year\":\"1909-04-20\"},{\"director\":\"Josepha Astbury\",\"genre\":\"Mystery\",\"id\":\"5b6e32eb8f24151c69c5e536\",\"rated\":\"R\",\"runtime\":\"88
+                        min\",\"title\":\"Lotstring\",\"year\":\"1989-12-31\"},{\"director\":\"Benedetta Nulty\",\"genre\":\"Thriller\",\"id\":\"5b6e32eb8f24151c69c5e537\",\"rated\":\"A\",\"runtime\":\"159
+                        min\",\"title\":\"Cookley\",\"year\":\"1937-08-14\"},{\"director\":\"Jessie Wellbelove\",\"genre\":\"History\",\"id\":\"5b6e32eb8f24151c69c5e538\",\"rated\":\"K\",\"runtime\":\"115
+                        min\",\"title\":\"Cardify\",\"year\":\"1905-08-19\"},{\"director\":\"Emerson Kinglesyd\",\"genre\":\"Music\",\"id\":\"5b6e32eb8f24151c69c5e539\",\"rated\":\"R\",\"runtime\":\"151
+                        min\",\"title\":\"Tampflex\",\"year\":\"2013-08-04\"},{\"director\":\"Aimil Osler\",\"genre\":\"Sport\",\"id\":\"5b6e32eb8f24151c69c5e53a\",\"rated\":\"G\",\"runtime\":\"148
+                        min\",\"title\":\"Stringtough\",\"year\":\"1901-02-03\"},{\"director\":\"Aida Ling\",\"genre\":\"Documentary\",\"id\":\"5b6e32eb8f24151c69c5e53b\",\"rated\":\"R\",\"runtime\":\"86
+                        min\",\"title\":\"Stim\",\"year\":\"1911-10-31\"},{\"director\":\"Avie Butrimovich\",\"genre\":\"Crime\",\"id\":\"5b6e32eb8f24151c69c5e53c\",\"rated\":\"A\",\"runtime\":\"131
+                        min\",\"title\":\"Konklab\",\"year\":\"1940-12-23\"},{\"director\":\"Lorie Eaddy\",\"genre\":\"Sport\",\"id\":\"5b6e32eb8f24151c69c5e53d\",\"rated\":\"G\",\"runtime\":\"133
+                        min\",\"title\":\"Latlux\",\"year\":\"1963-11-18\"},{\"director\":\"Clint Hulbert\",\"genre\":\"Family\",\"id\":\"5b6e32eb8f24151c69c5e53e\",\"rated\":\"A\",\"runtime\":\"99
+                        min\",\"title\":\"Cardguard\",\"year\":\"1952-11-19\"},{\"director\":\"Jaquenetta Tremellier\",\"genre\":\"Musical\",\"id\":\"5b6e32eb8f24151c69c5e53f\",\"rated\":\"G\",\"runtime\":\"127
+                        min\",\"title\":\"Keylex\",\"year\":\"1967-02-28\"},{\"director\":\"Granthem Shenton\",\"genre\":\"Fantasy\",\"id\":\"5b6e32eb8f24151c69c5e540\",\"rated\":\"A\",\"runtime\":\"118
+                        min\",\"title\":\"Ronstring\",\"year\":\"1982-09-22\"},{\"director\":\"Gianni Rosenkranc\",\"genre\":\"Horror\",\"id\":\"5b6e32eb8f24151c69c5e541\",\"rated\":\"S\",\"runtime\":\"77
+                        min\",\"title\":\"Ventosanzap\",\"year\":\"1966-03-21\"},{\"director\":\"Jobie Maddaford\",\"genre\":\"History\",\"id\":\"5b6e32eb8f24151c69c5e542\",\"rated\":\"A\",\"runtime\":\"117
+                        min\",\"title\":\"Namfix\",\"year\":\"1902-08-22\"},{\"director\":\"Niko Islip\",\"genre\":\"Romance\",\"id\":\"5b6e32eb8f24151c69c5e543\",\"rated\":\"S\",\"runtime\":\"150
+                        min\",\"title\":\"Sonair\",\"year\":\"1981-01-30\"},{\"director\":\"Guido Van der Brugge\",\"genre\":\"Horror\",\"id\":\"5b6e32eb8f24151c69c5e544\",\"rated\":\"B\",\"runtime\":\"88
+                        min\",\"title\":\"Ronstring\",\"year\":\"1913-11-14\"},{\"director\":\"Doti Ram\",\"genre\":\"Music\",\"id\":\"5b6e32eb8f24151c69c5e545\",\"rated\":\"A\",\"runtime\":\"96
+                        min\",\"title\":\"Transcof\",\"year\":\"1947-08-09\"},{\"director\":\"Corty Marlow\",\"genre\":\"Thriller\",\"id\":\"5b6e32eb8f24151c69c5e546\",\"rated\":\"S\",\"runtime\":\"105
+                        min\",\"title\":\"Ronstring\",\"year\":\"2009-12-26\"},{\"director\":\"Valenka Cosin\",\"genre\":\"Musical\",\"id\":\"5b6e32eb8f24151c69c5e547\",\"rated\":\"K\",\"runtime\":\"82
+                        min\",\"title\":\"Y-Solowarm\",\"year\":\"1929-11-19\"},{\"director\":\"Worthington Bunyard\",\"genre\":\"Crime\",\"id\":\"5b6e32eb8f24151c69c5e548\",\"rated\":\"K\",\"runtime\":\"123
+                        min\",\"title\":\"Tres-Zap\",\"year\":\"2015-04-05\"},{\"director\":\"Viviene Hallgate\",\"genre\":\"Action\",\"id\":\"5b6e32eb8f24151c69c5e549\",\"rated\":\"R\",\"runtime\":\"157
+                        min\",\"title\":\"Regrant\",\"year\":\"1982-01-17\"},{\"director\":\"Cathie Illiston\",\"genre\":\"Film-Noir\",\"id\":\"5b6e32eb8f24151c69c5e54a\",\"rated\":\"G\",\"runtime\":\"85
+                        min\",\"title\":\"Zathin\",\"year\":\"1920-08-14\"},{\"director\":\"Sheppard Eddoes\",\"genre\":\"Biography\",\"id\":\"5b6e32eb8f24151c69c5e54b\",\"rated\":\"G\",\"runtime\":\"166
+                        min\",\"title\":\"Matsoft\",\"year\":\"1929-04-14\"},{\"director\":\"Annora Dressel\",\"genre\":\"Action\",\"id\":\"5b6e32eb8f24151c69c5e54c\",\"rated\":\"R\",\"runtime\":\"116
+                        min\",\"title\":\"Konklab\",\"year\":\"1989-09-23\"},{\"director\":\"Lewie Joinsey\",\"genre\":\"Sport\",\"id\":\"5b6e32eb8f24151c69c5e54d\",\"rated\":\"S\",\"runtime\":\"163
+                        min\",\"title\":\"Bitwolf\",\"year\":\"1990-03-17\"}]"
+        - name: PORT
+          value: "9002"
+# ------------------- movieapp Service ------------------- #
+---
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+    app: movieapp
+  name: movieapp
+  namespace: default
+spec:
+  ports:
+    - port: 9002
+      protocol: TCP
+      targetPort: 9002
+  selector:
+    app: movieapp
+
+# ------------------- webacapp ------------------- #
+---
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: webacapp-deployment
+  namespace: default
+spec:
+  replicas: 1 # tells deployment to run 1 pods matching the template
+  template: # template definition for a pod
+    metadata:
+      # the name is not included in the meta data as a unique name is
+      # generated from the deployment name
+      labels:
+        app: webacapp
+    spec:
+      containers:
+      - name: webacapp
+        image: terminusimages/dummy_response_app:latest
+        imagePullPolicy: Always
+        ports:
+        - name: webacapp
+          containerPort: 9003
+          protocol: TCP
+        env:
+        - name: TEST_API
+          value: "/api/web"
+        - name: DUMMY_RESPONSE
+          value: "{\"result\":\"hello world\"}"
+        - name: PORT
+          value: "9003"
+# ------------------- webacapp Service ------------------- #
+---
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+    app: webacapp
+  name: webacapp
+  namespace: default
+spec:
+  ports:
+    - port: 9003
+      protocol: TCP
+      targetPort: 9003
+  selector:
+    app: webacapp
+---
+# ------------------- mongo RC ------------------- #
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  labels:
+    name: mongo
+  name: mongo-controller
+  namespace: default
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: mongo
+    spec:
+      containers:
+      - image: ansjin/movieapp:mongo
+        name: mongo
+        ports:
+        - name: mongo
+          containerPort: 27017
+          hostPort: 27017
+        volumeMounts:
+            - name: mongo-persistent-storage
+              mountPath: /data/db
+      volumes:
+        - name: mongo-persistent-storage
+          hostPath:
+              path: /data/db
+# ------------------- mongo Service ------------------- #
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    name: mongo
+  name: mongo
+  namespace: default
+spec:
+  ports:
+    - port: 27017
+      targetPort: 27017
+  selector:
+    name: mongo
+# ------------------- serveapp ------------------- #
+---
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: serveapp-deployment
+  namespace: default
+spec:
+  replicas: 3 # tells deployment to run 1 pods matching the template
+  template: # template definition for a pod
+    metadata:
+      # the name is not included in the meta data as a unique name is
+      # generated from the deployment name
+      labels:
+        app: serveapp
+    spec:
+      containers:
+      - name: serveapp
+        image: ansjin/four_microservice:serveapp
+        imagePullPolicy: Always
+        ports:
+        - name: serveapp
+          containerPort: 8080
+          protocol: TCP
+        resources:
+          limits:
+            cpu: 1000m
+            memory: 1000Mi
+          requests:
+            cpu: 1000m
+            memory: 1000Mi
+# ------------------- serveapp Service ------------------- #
+---
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+    app: serveapp
+  name: serveapp
+  namespace: default
+spec:
+  ports:
+    - port: 8080
+      protocol: TCP
+      targetPort: 8080
+  type: LoadBalancer
+  selector:
+    app: serveapp
