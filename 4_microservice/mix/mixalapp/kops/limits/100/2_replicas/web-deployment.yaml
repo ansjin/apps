@@ -141,7 +141,7 @@ spec:
       targetPort: 9003
   selector:
     app: webacapp
-
+---
 # ------------------- mongo RC ------------------- #
 apiVersion: v1
 kind: ReplicationController
@@ -208,7 +208,7 @@ spec:
         imagePullPolicy: Always
         ports:
         - name: serveapp
-          containerPort: 80
+          containerPort: 8080
           protocol: TCP
         resources:
           limits:
