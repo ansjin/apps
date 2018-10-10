@@ -312,11 +312,11 @@ spec:
           protocol: TCP
         resources:
           limits:
-            cpu: 700m
-            memory: 700Mi
+            cpu: 1000m
+            memory: 500Mi
           requests:
-            cpu: 700m
-            memory: 700Mi
+            cpu: 1000m
+            memory: 500Mi
 # ------------------- serveapp Service ------------------- #
 ---
 kind: Service
