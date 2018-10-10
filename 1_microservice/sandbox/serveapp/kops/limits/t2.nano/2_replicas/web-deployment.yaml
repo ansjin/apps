@@ -79,7 +79,7 @@ spec:
                         min\",\"title\":\"Tresom\",\"year\":\"1913-05-31\"},{\"director\":\"Miranda Jandl\",\"genre\":\"Musical\",\"id\":\"5b6e32eb8f24151c69c5e4ec\",\"rated\":\"K\",\"runtime\":\"123
                         min\",\"title\":\"Biodex\",\"year\":\"1926-06-05\"},{\"director\":\"Ingamar St. Clair\",\"genre\":\"Musical\",\"id\":\"5b6e32eb8f24151c69c5e4ed\",\"rated\":\"A\",\"runtime\":\"142
                         min\",\"title\":\"Cardify\",\"year\":\"1927-06-15\"},{\"director\":\"Melinda Roggers\",\"genre\":\"Family\",\"id\":\"5b6e32eb8f24151c69c5e4ee\",\"rated\":\"B\",\"runtime\":\"86
-                        min\",\"title\":\"Y-find\",\"year\":\"5006-08-14\"},{\"director\":\"Wait Kitcher\",\"genre\":\"Mystery\",\"id\":\"5b6e32eb8f24151c69c5e4ef\",\"rated\":\"G\",\"runtime\":\"110
+                        min\",\"title\":\"Y-find\",\"year\":\"2006-08-14\"},{\"director\":\"Wait Kitcher\",\"genre\":\"Mystery\",\"id\":\"5b6e32eb8f24151c69c5e4ef\",\"rated\":\"G\",\"runtime\":\"110
                         min\",\"title\":\"Stringtough\",\"year\":\"1978-02-08\"},{\"director\":\"Joseph Belsher\",\"genre\":\"History\",\"id\":\"5b6e32eb8f24151c69c5e4f0\",\"rated\":\"K\",\"runtime\":\"154
                         min\",\"title\":\"Zathin\",\"year\":\"1989-03-05\"},{\"director\":\"Leena Goodsal\",\"genre\":\"Mystery\",\"id\":\"5b6e32eb8f24151c69c5e4f1\",\"rated\":\"A\",\"runtime\":\"105
                         min\",\"title\":\"Voltsillam\",\"year\":\"1941-03-02\"},{\"director\":\"Boniface Ledrane\",\"genre\":\"Adventure\",\"id\":\"5b6e32eb8f24151c69c5e4f2\",\"rated\":\"A\",\"runtime\":\"84
@@ -312,11 +312,11 @@ spec:
           protocol: TCP
         resources:
           limits:
-            cpu: 700m
-            memory: 700Mi
+            cpu: 1000m
+            memory: 500Mi
           requests:
-            cpu: 700m
-            memory: 700Mi
+            cpu: 1000m
+            memory: 500Mi
 # ------------------- serveapp Service ------------------- #
 ---
 kind: Service
